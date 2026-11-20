@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../services/auth_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_button.dart';
 
@@ -74,10 +75,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // Наша красивая кнопка
               CustomButton(
                 text: 'Зарегистрироваться',
-                onPressed: () {
-                  // Пока просто выводим то, что ввели, в консоль
-                  print('Email: ${_emailController.text}');
-                  print('Пароль: ${_passwordController.text}');
+                onPressed: () async {
+                  final email = _emailController.text.trim();
+                  final password = _passwordController.text.trim();
+
+                  // Проверка, что поля не пустые
+                  if (email.isEmpty || password.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Заполните все поля!'),
+                      ),
+                    );
+                    return;
+                  }
+
+                  // Сохраняем в память
+                  await AuthService.saveUser(email, password);
+
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Успешно зарегистрировано!'),
+                      ),
+                    );
+                    // Возвращаемся на главный экран
+                    Navigator.pushReplacementNamed(
+                      context,
+                      '/characters',
+                    );
+                  }
                 },
               ),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'screens/welcome_screen.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,9 +14,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AI Companion',
-      debugShowCheckedModeBanner:
-          false, // Убирает красную ленточку "DEBUG" в углу
-      home: const WelcomeScreen(), // Запускаем наш экран приветствия
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const WelcomeScreen(),
+        '/characters': (context) =>
+            const HomeScreen(), // <-- Вот наш экран с панелью
+      },
     );
   }
 }

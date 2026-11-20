@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'register_screen.dart';
+import 'login_screen.dart';
 import '../theme/app_theme.dart';
 import '../widgets/custom_button.dart';
 
@@ -37,7 +38,12 @@ class WelcomeScreen extends StatelessWidget {
             CustomButton(
               text: 'Войти',
               onPressed: () {
-                print('Нажата кнопка Войти');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const LoginScreen(),
+                  ),
+                );
               },
             ),
           ],
